@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fund DApp</title>
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #e8f0fe, #f1f6fc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      color: #2c3e50;
+      margin-bottom: 1rem;
+    }
+
+    .hero-img {
+      width: 100px;
+      margin-bottom: 1rem;
+    }
+
+    #price-info {
+      font-size: 1rem;
+      margin: 1rem 0 1.5rem;
+      padding: 1rem;
+      background-color: #f5f8ff;
+      border-radius: 10px;
+      border: 1px solid #d0e2ff;
+      color: #333;
+    }
+
+    input {
+      padding: 12px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
+      margin: 10px 0;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #1e90ff;
+      outline: none;
+      box-shadow: 0 0 6px rgba(30, 144, 255, 0.3);
+    }
+
+    button {
+      padding: 12px;
+      width: 100%;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      margin-top: 12px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    button i {
+      font-size: 1rem;
+    }
+
+    #connectButton {
+      background-color: #1e90ff;
+      color: white;
+    }
+
+    #connectButton:hover {
+      background-color: #0077cc;
+    }
+
+    #balanceButton {
+      background-color: #6c5ce7;
+      color: white;
+    }
+
+    #balanceButton:hover {
+      background-color: #5a4fcf;
+    }
+
+    #fundButton {
+      background-color: #28a745;
+      color: white;
+    }
+
+    #fundButton:hover {
+      background-color: #218838;
+    }
+
+    #withdrawButton {
+      background-color: #dc3545;
+      color: white;
+      display: none;
+    }
+
+    #withdrawButton:hover {
+      background-color: #c82333;
+    }
+
+    #connect-status,
+    #fund-status,
+    #curr-balance,
+    #tx-status {
+      font-size: 0.9rem;
+      margin-top: 10px;
+      color: #444;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img class="hero-img" src="https://cdn-icons-png.flaticon.com/512/2089/2089795.png" alt="Ethereum Icon">
+    <h1><i class="fas fa-wallet"></i> Fund Smart Contract</h1>
+
+    <!-- Connect -->
+    <button id="connectButton"><i class="fas fa-plug"></i> Connect MetaMask</button>
+    <p id="connect-status"></p>
+
+    <!-- Price Info -->
+    <div id="price-info">
+      <i class="fas fa-coins"></i> <strong>Connect MetaMask to see current ETH/USD price...</strong>
+    </div>
+
+    <!-- Balance -->
+    <button id="balanceButton"><i class="fas fa-coins"></i> Check Balance</button>
+    <div id="curr-balance"></div>
+
+    <!-- ETH input -->
+    <input type="text" id="amount" placeholder="Enter ETH amount" />
+    <button id="fundButton"><i class="fas fa-paper-plane"></i> Fund</button>
+    <p id="fund-status"></p>
+
+    <!-- Withdraw (only for owner) -->
+    <div id="withdrawSection">
+      <button id="withdrawButton"><i class="fas fa-hand-holding-usd"></i> Withdraw</button>
+    </div>
+
+    <!-- Tx status -->
+    <div id="tx-status"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.7.0/dist/ethers.umd.min.js"></script>
+  <script type="module" src="./script.js"></script>
+</body>
+</html>
