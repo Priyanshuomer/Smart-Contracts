@@ -6,8 +6,8 @@ import {AggregatorV3Interface} from "../lib/chainlink-brownie-contracts/contract
 
 contract Funds{
 
-    address public immutable i_owner ;
-     uint256 constant minimumAmountinUSD = 2;
+    address private immutable i_owner ;
+     uint256 constant MINIMUM_AMOUNT_IN_USD = 1;
 
      AggregatorV3Interface s_priceFeed;
 
@@ -16,19 +16,16 @@ contract Funds{
       s_priceFeed = AggregatorV3Interface(priceFeed);
     }
 
-    address[] public listOfFunders;
-    mapping(address => uint256) public senders;
-    // to fund 
-// event Funded(address indexed funder, uint256 amount);
+    address[] private listOfFunders;
+    mapping(address => uint256) private senders;
+
 
 function fundEth() public payable {
     uint256 amount = getInUsd(msg.value);
-    require(amount >= minimumAmountinUSD, "Minimum USD amount not met");
+    require(amount >= MINIMUM_AMOUNT_IN_USD, "Minimum USD amount not met");
     
     listOfFunders.push(msg.sender);
-    senders[msg.sender] = amount;
-
-    // emit Funded(msg.sender, amo);
+    senders[msg.sender] += amount;
 }
 
 
@@ -53,10 +50,10 @@ function fundEth() public payable {
 
      function withdraw() isOwner public {
 
-         //  for(uint256 i=0; i<listOfFunders.length; i++)
-         // senders[listOfFunders[i]] = 0;
+          for(uint256 i=0; i<listOfFunders.length; i++)
+         senders[listOfFunders[i]] = 0;
 
-         // delete listOfFunders;
+         delete listOfFunders;
 
         (bool isSuccess, ) = payable(msg.sender).call{value : address(this).balance}("");
          require(isSuccess,"Txn Failed.........");
@@ -75,4 +72,20 @@ function fundEth() public payable {
        require(msg.sender == i_owner);
        _;
      }
+
+
+     function getOwnerAddress() public view returns(address){
+        return i_owner;
+     }
+
+
+     function getMinimumAmountRequired() public view returns(uint256) {
+      return MINIMUM_AMOUNT_IN_USD;
+     }
+
+     function getAmountFundedByAddress(address funder) public returns(uint256) {
+         return senders[funder];
+     }
+
+
 }

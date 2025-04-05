@@ -10,7 +10,7 @@ contract helperConfig is Script{
     struct Networks {
         address priceFeed;
     }
-
+// uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
      Networks public currNetwork;
 
      constructor() {
