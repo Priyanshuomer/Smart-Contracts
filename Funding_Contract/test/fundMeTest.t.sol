@@ -15,9 +15,32 @@ contract FundsTest is Test{
     }
 
      function testOwnerAddress() public view{
-        address ownerFromContract = newContract.i_owner();
-        assertEq(ownerFromContract,msg.sender);
+        address ownerFromContract = newContract.getOwnerAddress();
+        address expectedDeployer = vm.addr(vm.envUint("LOCAL_PRIVATE_KEY"));
+       assertEq(ownerFromContract,expectedDeployer);
      }
+
+     address public tempAccount = makeAddr("OM");
+
+function fundContractFromTempAccount() internal {
+    vm.deal(tempAccount, 1 ether);
+    vm.prank(tempAccount); // sets msg.sender for the next call
+    newContract.fundEth{value: 0.4*1e18}(); // assuming fundEth is payable
+}
+
+
+
+     function testcheckSendingHistorySaved() public{
+        fundContractFromTempAccount();
+       uint256 val = newContract.getAmountFundedByAddress(tempAccount);
+       uint256 am = newContract.getInUsd(0.4*1e18);
+       assertEq(val,am);
+        val = newContract.getAmountFundedByAddress(makeAddr("HARI_OM"));
+        // assertEq(val,0);
+     }
+
+
+
 
     function testgetDecimals() public view{
         uint8 amount = newContract.getDecimals();

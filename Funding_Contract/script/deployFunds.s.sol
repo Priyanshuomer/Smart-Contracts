@@ -9,7 +9,7 @@ import {helperConfig} from "./helperConfig.s.sol";
 
 contract deployFundsContract is Script
 {
-    uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+    uint256 deployerPrivateKey = vm.envUint("LOCAL_PRIVATE_KEY");
 
     function run() external returns(Funds) {
         helperConfig newHelperConfig = new helperConfig();

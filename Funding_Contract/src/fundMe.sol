@@ -6,7 +6,7 @@ import {AggregatorV3Interface} from "../lib/chainlink-brownie-contracts/contract
 
 contract Funds{
 
-    address private immutable i_owner ;
+     address private immutable i_owner ;
      uint256 constant MINIMUM_AMOUNT_IN_USD = 1;
 
      AggregatorV3Interface s_priceFeed;
@@ -78,12 +78,29 @@ function fundEth() public payable {
         return i_owner;
      }
 
+     struct Users{
+       address addr;
+       uint256 val;
 
-     function getMinimumAmountRequired() public view returns(uint256) {
-      return MINIMUM_AMOUNT_IN_USD;
      }
 
-     function getAmountFundedByAddress(address funder) public returns(uint256) {
+     function getFundersList() public view returns(Users[] memory){
+
+         uint256 len = listOfFunders.length;
+           Users[] memory users = new Users[](len);
+
+         for(uint256 i=0; i < len ; i++)
+         users[i] = Users({addr : listOfFunders[i] , val : senders[listOfFunders[i]]});
+
+         return users;
+     }
+
+
+     function getMinimumAmountRequired() public pure returns(uint256) {
+       return MINIMUM_AMOUNT_IN_USD;
+     }
+
+     function getAmountFundedByAddress(address funder) public view returns(uint256) {
          return senders[funder];
      }
 
