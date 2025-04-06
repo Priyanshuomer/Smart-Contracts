@@ -36,9 +36,23 @@ function fundContractFromTempAccount() internal {
        uint256 am = newContract.getInUsd(0.4*1e18);
        assertEq(val,am);
         val = newContract.getAmountFundedByAddress(makeAddr("HARI_OM"));
-        // assertEq(val,0);
+        assertEq(val,0);
      }
 
+
+    
+        function testWithdraw() public{
+            fundContractFromTempAccount();
+
+           address ownerFromContract = newContract.getOwnerAddress();
+            vm.prank(ownerFromContract);
+            newContract.withdraw();
+         
+             uint256 val = newContract.getAmountFundedByAddress(tempAccount);
+             assertEq(val,0);
+
+
+        }
 
 
 
