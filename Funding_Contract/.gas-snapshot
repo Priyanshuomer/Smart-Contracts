@@ -1,0 +1,4 @@
+FundsTest:testOwnerAddress() (gas: 10491)
+FundsTest:testWithdraw() (gas: 158688)
+FundsTest:testcheckSendingHistorySaved() (gas: 116090)
+FundsTest:testgetDecimals() (gas: 20063)
