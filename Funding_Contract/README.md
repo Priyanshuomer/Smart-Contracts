@@ -1,66 +1,178 @@
-## Foundry
+# Features
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This decentralized funding smart contract provides the following capabilities:
 
-Foundry consists of:
+- 📥 **Funding**: Allows users to contribute ETH to the contract.
+- 🔐 **Withdrawals**: Restricted to the contract owner.
+- 💸 **Price Feed Integration**: Uses Chainlink to convert ETH to USD in real time.
+- 📃 **Funders List**: Displays all funders along with the amount they've contributed.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+---
 
-## Documentation
 
-https://book.getfoundry.sh/
 
-## Usage
+# Installation
+### Prerequisites:
 
-### Build
+- `curl` or `wget`
+- A Unix-like shell (Linux/macOS/WSL or Git Bash on Windows)
 
-```shell
-$ forge build
+### Install Foundry
+
+Using `curl`:
+```bash
+curl -L https://foundry.paradigm.xyz | bash
 ```
 
-### Test
-
-```shell
-$ forge test
+Or using `wget`:
+```bash
+wget -qO- https://foundry.paradigm.xyz | bash
 ```
 
-### Format
+After installation, source your shell configuration:
 
-```shell
-$ forge fmt
+```bash
+source ~/.bashrc
 ```
 
-### Gas Snapshots
+Or if using Zsh:
 
-```shell
-$ forge snapshot
+```bash
+source ~/.zshrc
 ```
 
-### Anvil
+Then run:
 
-```shell
-$ anvil
+```bash
+foundryup
 ```
 
-### Deploy
+### Verify Installation:
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+```bash
+forge --version
+cast --version
+anvil --version
+chisel --version
 ```
 
-### Cast
+---
 
-```shell
-$ cast <subcommand>
+## Project Setup
+
+```bash
+git clone https://github.com/priyanshuomer/Smart-Contracts/Funding_Contract.git
+cd Funding_Contract
 ```
 
-### Help
+### 📦 Install Dependencies
 
+```bash
+forge install
+```
+
+### 🔐 Environment Configuration
+
+Create a `.env` file and add the following variables:
+
+```env
+PRIVATE_KEY=<your_wallet_private_key>
+RPC_URL=<your_rpc_url>
+```
+
+---
+
+Run 
 ```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+source .env
+```
+
+## 🚀 Interacting with the Contract
+
+You can interact with the Funding smart contract in two ways:
+
+### 🔧 Option 1: Already Deployed
+
+Just add your SEPOLIA wallet's private key to `.env` file in `PRIVATE_KEY` and open :
+
+[http://127.0.0.1:5500/Funding_Contract/index.html](http://127.0.0.1:5500/Funding_Contract/index.html)
+
+---
+
+### 🔧 Option 2: Deploy and Interact (Using Anvil)
+
+#### Compile the Contract
+
+```bash
+forge compile -vvvv
+```
+
+#### Start Local Blockchain
+
+```bash
+anvil
+```
+
+#### Deploy the Contract
+
+Update your `.env`:
+
+```env
+RPC_URL=http://127.0.0.1:8545
+PRIVATE_KEY=<Anvil_Rich_Account_Private_Key>
+```
+
+In a new terminal, run:
+
+```bash
+forge script script/deployFunds.s.sol:deployFundsContract --rpc-url ${RPC_URL} --private-key ${PRIVATE_KEY}
+```
+
+After deployment:
+
+- Update `CONTRACT_ADDRESS` in `constants.js` with the deployed contract address.
+- Replace the ABI with contents from `out/fundMe.sol/Funds.json`.
+
+Then open:
+
+[http://127.0.0.1:5500/Funding_Contract/index.html](http://127.0.0.1:5500/Funding_Contract/index.html)
+
+---
+
+## 🧪 Testing
+
+Run tests with:
+
+```bash
+forge test -vvvv
+```
+
+---
+
+## ⛽ Gas Snapshots
+
+Generate gas snapshots:
+
+```bash
+forge snapshot
+```
+
+---
+
+## 🔧 Cast Commands
+
+Interact using:
+
+```bash
+cast <subcommand>
+```
+
+---
+
+## 🆘 Help Commands
+
+```bash
+forge --help
+anvil --help
+cast --help
 ```
