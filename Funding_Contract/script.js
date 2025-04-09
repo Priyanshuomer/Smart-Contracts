@@ -6,13 +6,11 @@ const connectButton = document.getElementById("connectButton");
 const fundButton = document.getElementById("fundButton");
 const withdrawButton = document.getElementById("withdrawButton");
 const balanceButton = document.getElementById("balanceButton");
-// const fetchUsersButton = document.querySelector('.fetchUsersButton');
 
 connectButton.onclick = connect_metamask;
 fundButton.onclick = fund_amount;
 withdrawButton.onclick = withdraw_amount;
 balanceButton.onclick = getCurrentBalance;
-// fetchUsersButton.onclick = fetchFunders;
 
 function cleaner() {
     document.getElementById("curr-balance").innerText = "";
@@ -105,7 +103,7 @@ async function yourFundings() {
   const fundedByUserInETH = ethers.formatEther(valInWEI);
   const fundedByUserInUSD = await contract.getInUsd(valInWEI);
 
-  // Inject enhanced CSS
+ 
   if (!document.getElementById("funding-style")) {
     const style = document.createElement("style");
     style.id = "funding-style";
@@ -386,8 +384,7 @@ async function fetchFunders() {
       for (const user of funders) {
         const inUSD = await contract.getInUsd(user.val);
         const formattedEth = ethers.formatEther(user.val);
-        // const formattedUSD = ethers.formatUnits(inUSD, 18);
-      
+        
         listHtml += `
           <tr>
             <td>${index++}</td>

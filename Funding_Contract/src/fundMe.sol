@@ -41,11 +41,6 @@ contract Funds {
     }
 
     function withdraw() public isOwner {
-        // for (uint256 i = 0; i < listOfFunders.length; i++) {
-        //     senders[listOfFunders[i]] = 0;
-        // }
-
-        // delete listOfFunders;
 
         (bool isSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
         require(isSuccess, "Txn Failed.........");

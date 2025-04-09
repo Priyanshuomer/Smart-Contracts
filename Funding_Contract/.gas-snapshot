@@ -1,3 +1,3 @@
-FundsTest:testOwnerAddress() (gas: 10491)
+FundsTest:testOwnerAddress() (gas: 11014)
 FundsTest:testWithdraw() (gas: 144707)
 FundsTest:testcheckSendingHistorySaved() (gas: 134561)

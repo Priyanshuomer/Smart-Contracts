@@ -8,8 +8,7 @@ import {Funds} from "../src/fundMe.sol";
 import {helperConfig} from "./helperConfig.s.sol";
 
 contract deployFundsContract is Script {
-    uint256 deployerPrivateKey = uint256(vm.envBytes32("LOCAL_PRIVATE_KEY"));
-    // vm.startBroadcast(privateKey);
+    uint256 deployerPrivateKey = uint256(vm.envBytes32("PRIVATE_KEY"));
 
     function run() external returns (Funds) {
         helperConfig newHelperConfig = new helperConfig();

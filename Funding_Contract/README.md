@@ -84,7 +84,8 @@ RPC_URL=<your_rpc_url>
 
 Run 
 ```shell
-source .env
+export $(grep -v '^#' .env | xargs)
+
 ```
 
 ## 🚀 Interacting with the Contract
@@ -125,7 +126,7 @@ PRIVATE_KEY=<Anvil_Rich_Account_Private_Key>
 In a new terminal, run:
 
 ```bash
-forge script script/deployFunds.s.sol:deployFundsContract --rpc-url ${RPC_URL} --private-key ${PRIVATE_KEY}
+forge script script/deployFunds.s.sol:deployFundsContract --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast
 ```
 
 After deployment:
