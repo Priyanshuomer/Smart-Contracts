@@ -85,8 +85,9 @@
     .switch-nav {
       color: white;
       text-decoration: none;
+      opacity: 0.9;
       font-size: 1.5rem;
-      font-weight: bold;
+      font-weight: 500;
       transition: opacity 0.3s;
       cursor: pointer;
     }
@@ -94,6 +95,20 @@
     .switch-nav:hover {
       opacity: 0.8;
     }
+
+    /* #connectButton{
+      margin-bottom: -12px;
+    }
+
+    #price-info{
+      margin-top: -15px;
+      padding-top: 0px;
+      padding-bottom: 0px;
+    }
+
+    #your-funding{
+      margin-top: -22px;
+    } */
 
     #connectButton { background: #007bff; }
     #balanceButton { background: #6c5ce7; }
@@ -105,6 +120,7 @@
     #price-info, #connect-status, #fund-status, #curr-balance, #tx-status {
       font-size: 0.9rem;
       margin-top: 10px;
+      margin-bottom: 10px;
     }
 
     #fundersList {
@@ -129,7 +145,8 @@
     }
 
     .togg{
-      color:black;
+      font-weight:bolder;
+      opacity: 1;
       border-radius: 0.1rem;
       margin-top: 0px;
       margin-bottom:0px;
@@ -141,7 +158,8 @@
 
   </style>
 </head>
-<body onload="connect_metamask()">
+<body>
+  <!-- onload="connect_metamask()" -->
 
   <!-- Navbar -->
   <nav>
@@ -160,7 +178,11 @@
       <i class="fas fa-coins"></i> <strong>Connect MetaMask to see current ETH/USD price...</strong>
     </div>
 
-    <button id="balanceButton"><i class="fas fa-eye"></i> Check Balance</button>
+    <div id="your-fundings">
+
+    </div>
+
+    <button id="balanceButton"><i class="fas fa-eye"></i> Check Contract Balance</button>
     <div id="curr-balance"></div>
 
     <input type="text" id="amount" placeholder="Enter ETH amount" />
@@ -183,6 +205,7 @@
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/ethers@6.7.0/dist/ethers.umd.min.js"></script>
+  <!-- //  -->
   <script type="module" src="./script.js"></script>
   <script>
     function switchSection(section) {

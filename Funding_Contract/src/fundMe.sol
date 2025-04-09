@@ -7,7 +7,7 @@ import {AggregatorV3Interface} from
 
 contract Funds {
     address private immutable i_owner;
-    uint256 constant private MINIMUM_AMOUNT_IN_USD = 1;
+    uint256 private constant MINIMUM_AMOUNT_IN_USD = 1;
 
     AggregatorV3Interface s_priceFeed;
 
@@ -22,9 +22,10 @@ contract Funds {
     function fundEth() public payable {
         uint256 amount = getInUsd(msg.value);
         require(amount >= MINIMUM_AMOUNT_IN_USD, "Minimum USD amount not met");
-        
-        if(senders[msg.sender] == 0)
-        listOfFunders.push(msg.sender);
+
+        if (senders[msg.sender] == 0) {
+            listOfFunders.push(msg.sender);
+        }
 
         senders[msg.sender] += msg.value;
     }
@@ -33,7 +34,6 @@ contract Funds {
         (, int256 answer,,,) = s_priceFeed.latestRoundData();
         return uint256(answer * 1e10);
     }
-
 
     function getInUsd(uint256 amount) public view returns (uint256) {
         uint256 USDperEthinWei = getLatest();

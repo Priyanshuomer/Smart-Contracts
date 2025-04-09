@@ -10,6 +10,9 @@ broadcast/**/dry-run/
 
 # Docs
 docs/
+.gas-snapshot
+.gitignore
+
 
 # Dotenv file
 .env
@@ -18,3 +21,4 @@ docs/
 /.gitmodules
 
 node_modules/
+ethers.min.js

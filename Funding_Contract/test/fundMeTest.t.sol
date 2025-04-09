@@ -23,40 +23,42 @@ contract FundsTest is Test {
 
     address public tempAccount = makeAddr("OM");
 
-    function fundContractFromTempAccount() internal {
+    function fundContractFromTempAccount(string memory name) internal {
+        tempAccount = makeAddr(name);
         vm.deal(tempAccount, 1 ether);
         vm.prank(tempAccount); // sets msg.sender for the next call
         newContract.fundEth{value: 0.4 * 1e18}(); // assuming fundEth is payable
     }
 
     function testcheckSendingHistorySaved() public {
-        fundContractFromTempAccount();
+        fundContractFromTempAccount("RAM");
         uint256 val = newContract.getAmountFundedByAddress(tempAccount);
-        uint256 am = newContract.getInUsd(0.4 * 1e18);
-        assertEq(val, am);
+        // uint256 am = newContract.getInUsd(0.4 * 1e18);
+        assertEq(val, 0.4 * 1e18);
+        fundContractFromTempAccount("RAM");
+        val = newContract.getAmountFundedByAddress(tempAccount);
+        assertEq(val, 0.8 * 1e18);
         val = newContract.getAmountFundedByAddress(makeAddr("HARI_OM"));
         assertEq(val, 0);
     }
 
     function testWithdraw() public {
-        fundContractFromTempAccount();
+        fundContractFromTempAccount("RAM");
 
         address ownerFromContract = newContract.getOwnerAddress();
         vm.prank(ownerFromContract);
         newContract.withdraw();
 
         uint256 val = newContract.getAmountFundedByAddress(tempAccount);
-        assertEq(val, 0);
+        assertEq(address(newContract).balance, 0);
 
-        fundContractFromTempAccount();
+        fundContractFromTempAccount("RAM");
 
         vm.prank(makeAddr("hello"));
         vm.expectRevert("Owner is not matched with current user !!");
         newContract.withdraw();
 
         val = newContract.getAmountFundedByAddress(tempAccount);
-        uint256 am = newContract.getInUsd(0.4 * 1e18);
-        assertEq(val, am);
+        assertEq(val, 0.8 * 1e18);
     }
-    
 }

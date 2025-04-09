@@ -24,6 +24,9 @@ function cleaner() {
     return;
 }
 
+document.addEventListener("click", yourFundings);
+
+
 async function connect_metamask() {
   cleaner();
     if (typeof window.ethereum !== "undefined") {
@@ -43,17 +46,19 @@ async function connect_metamask() {
         }
 
         connectButton.innerText = "Connected";
+        console.log("Connected");
 
         const currEthAmount = Number(await contract.getLatest()) / 1e18;
         const minimumETHRequired = 1.0 / currEthAmount;
-      
+
 
         document.getElementById("price-info").innerHTML = `
-        <div style="text-align: left; background-color: #f8faff; padding: 1rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05);">
-          <p style="margin-bottom: 1rem; font-weight: bold; color: #333;">
+        <div style="text-align: left; background-color: #f8faff; padding: 0.3rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05);">
+          <p style="margin-bottom: 0.3rem; font-weight: bold; color: #333;">
             <i class="fas fa-wallet" style="color: #6c5ce7; margin-right: 6px;"></i>
-            Current Wallet: <span style="font-family: monospace; font-size: 0.95rem;"><b>${currWalletAddress}<b></span>
+            Current Wallet: <span style="font-family: monospace; font-size: 0.99rem;"><b>${currWalletAddress}<b></span>
           </p>
+
       
           <p style="margin: 0.5rem 0;">
             <i class="fas fa-chart-line" style="color: #1e90ff; margin-right: 6px;"></i>
@@ -69,10 +74,11 @@ async function connect_metamask() {
         </div>
       `;
        } catch(error){
+        console.log(error);
         document.getElementById("connect-status").innerHTML = `
         <div style="padding: 1rem; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 10px; color: #721c24; margin-top: 1rem;">
           <i class="fas fa-times-circle" style="margin-right: 8px; color: #dc3545;"></i>
-          <strong>It seems like you have rejected a requet to connect or your request is pending , check your MetaMAsk </strong>
+          <strong>It seems like you have rejected a requet to connect or your request is pending , check your MetaMask </strong>
         </div>
       `;
        }
@@ -88,7 +94,76 @@ async function connect_metamask() {
         </div>
       `;
     }
+    yourFundings();
 }
+
+async function yourFundings() {
+  if (!contract) return;
+
+  const currWalletAddress = await signer.getAddress();
+  const valInWEI = await contract.getAmountFundedByAddress(currWalletAddress);
+  const fundedByUserInETH = ethers.formatEther(valInWEI);
+  const fundedByUserInUSD = await contract.getInUsd(valInWEI);
+
+  // Inject enhanced CSS
+  if (!document.getElementById("funding-style")) {
+    const style = document.createElement("style");
+    style.id = "funding-style";
+    style.innerHTML = `
+      .ccc {
+        background: #f9fbff;
+        border: 1px solid #d1e3ff;
+        border-radius: 12px;
+        padding: 10px;
+        max-width: 420px;
+        margin: 1px 0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        font-family: 'Segoe UI', sans-serif;
+        color: #2c3e50;
+        text-align: center;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .ccc #hed {
+        font-size: 17px;
+        margin-bottom: 12px;
+        color: #1a237e;
+      }
+
+      .ccc p {
+        font-size: 16px;
+        margin: 0;
+      }
+
+      .ccc .eth {
+        color: #1565c0;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .ccc .usd {
+        color: #2e7d32;
+        font-weight: bold;
+        font-size: 16px;
+        margin-left: 8px;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  document.getElementById("your-fundings").innerHTML = 
+  `
+    <div class="ccc">
+      <span id="hed">Your Total Fundings : </span>
+        <span class="eth">${fundedByUserInETH} ETH</span> 
+        <span class="usd">($${fundedByUserInUSD})</span>
+     
+    </div>
+  `;
+}
+
+
+
 
 async function fund_amount() {
     if (!provider || !signer) {
@@ -201,6 +276,7 @@ async function withdraw_amount() {
 
 async function getCurrentBalance() {
     cleaner();
+    yourFundings();
     if (!provider || !signer) {
         document.getElementById("curr-balance").innerHTML = `
         <div style="padding: 1rem; background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 10px; color: #856404; margin-top: 1rem;">
@@ -341,3 +417,4 @@ async function fetchFunders() {
 
 window.fetchFunders = fetchFunders;
 window.connect_metamask = connect_metamask;
+window.yourFundings = yourFundings;
