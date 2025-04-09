@@ -10,8 +10,8 @@ broadcast/**/dry-run/
 
 # Docs
 docs/
-.gas-snapshot
-.gitignore
+.gas-snapshot/
+.gitignore/
 
 
 # Dotenv file
