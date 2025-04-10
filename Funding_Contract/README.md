@@ -63,8 +63,8 @@ chisel --version
 ## Project Setup
 
 ```bash
-git clone https://github.com/priyanshuomer/Smart-Contracts/Funding_Contract.git
-cd Funding_Contract
+git clone https://github.com/Priyanshuomer/Smart-Contracts.git
+cd Smart-Contracts/Funding_Contract
 ```
 
 ### 📦 Install Dependencies
