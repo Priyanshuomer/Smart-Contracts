@@ -9,6 +9,8 @@ This decentralized funding smart contract provides the following capabilities:
 
 ---
 
+### You can see contract at [https://sepolia.etherscan.io/address/0x6c86df0c8331c16275295f39a189de2d16be5251](https://sepolia.etherscan.io/address/0x6c86df0c8331c16275295f39a189de2d16be5251)
+
 
 
 # Installation
@@ -94,7 +96,9 @@ You can interact with the Funding smart contract in two ways:
 
 ### 🔧 Option 1: Already Deployed
 
-Just add your SEPOLIA wallet's private key to `.env` file in `PRIVATE_KEY` and open :
+Just switch to Sepolia Testnet in your MetaMask and run the web server locally and 
+
+Then , open : 
 
 [http://127.0.0.1:5500/Funding_Contract/index.html](http://127.0.0.1:5500/Funding_Contract/index.html)
 
@@ -116,7 +120,7 @@ anvil
 
 #### Deploy the Contract
 
-Update your `.env`:
+Update your `.env` file:
 
 ```env
 RPC_URL=http://127.0.0.1:8545
@@ -133,6 +137,8 @@ After deployment:
 
 - Update `CONTRACT_ADDRESS` in `constants.js` with the deployed contract address.
 - Replace the ABI with contents from `out/fundMe.sol/Funds.json`.
+- Add one of Anvil's rich account to your metamask and switch to Anvil network .
+- Run the web server locally and 
 
 Then open:
 
