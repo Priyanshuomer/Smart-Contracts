@@ -130,19 +130,16 @@ cd ../contracts
 forge install
 ```
 
-### 5. Set up environment variables
-
-```sh
-cp .env.example .env
+### 5. Update contract addresses
+```ts
+Open `frontend/src/config/contract.ts` and update the addresses:
+export const LOTTERY_ADDRESS  = <Deployed_Contract_Address>;
+export const OM_TOKEN_ADDRESS = <Deployed_Contract_Address>;
+export const CHAIN_ID         = 31337; // Local Anvil
 ```
-
-```env
-SEPOLIA_RPC_URL=https://eth-sepolia.g.alchemy.com/v2/<YOUR_KEY>
-PRIVATE_KEY=0x...
-ETHERSCAN_API_KEY=...
-```
-
 ---
+
+
 
 ## 🧪 Testing Locally (Anvil)
 
