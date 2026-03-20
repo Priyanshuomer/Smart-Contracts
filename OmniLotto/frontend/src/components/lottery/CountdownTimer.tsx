@@ -134,7 +134,7 @@ export function CountdownTimer() {
     >
       <div className="mb-5 flex items-center justify-center gap-2">
         <Timer className="h-5 w-5 text-accent" />
-        <h2 className="text-lg font-bold">Next Draw</h2>
+        <h2 className="text-lg font-bold">Lottery Ends In</h2>
       </div>
 
       {showStatus && status ? (

@@ -27,7 +27,7 @@ export function Header() {
             <span className="text-xl">🎰</span>
           </div>
           <div>
-            <h1 className="text-lg font-bold gradient-text sm:text-xl">OmLottery</h1>
+            <h1 className="text-lg font-bold gradient-text sm:text-xl">OmniLotto</h1>
             <p className="text-xs text-muted-foreground">Decentralized Lottery</p>
           </div>
         </div>
@@ -45,6 +45,15 @@ export function Header() {
             </Button>
           )}
 
+          {/* ✅ Network badge — only show when connected and on correct network */}
+          {account && isCorrectNetwork && (
+            <div className="hidden sm:flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs font-mono text-emerald-400">Sepolia</span>
+              <span className="text-xs text-muted-foreground font-mono">#{11155111}</span>
+            </div>
+          )}
+
           {!account ? (
             <Button
               onClick={connectWallet}
@@ -56,7 +65,6 @@ export function Header() {
             </Button>
           ) : (
             <div className="flex items-center gap-2">
-              {/* ✅ Address + copy button */}
               <div className="glass rounded-lg px-3 py-1.5 flex items-center gap-2">
                 <span className="text-xs font-mono text-primary">
                   {account.slice(0, 6)}...{account.slice(-4)}
@@ -88,3 +96,4 @@ export function Header() {
     </motion.header>
   );
 }
+ 

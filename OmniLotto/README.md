@@ -13,6 +13,7 @@ OmniLotto is a fully decentralized lottery system built on Ethereum, powered by 
 - 🏆 **Two Winners Per Round** — 1st place gets 50%, 2nd place gets 45%, 5% goes to fee wallet
 - 🪙 **ERC20 Token Tickets** — Players purchase OmToken (OM) with ETH to enter
 - 🔐 **Address Blocking** — Owner can block malicious addresses from participating
+- 🔄 **Re-pick on Block** — If a winner is blocked, a new winner is automatically selected
 - 📜 **Winner History** — All past winners stored on-chain and publicly viewable
 - 🌐 **Frontend dApp** — Full React/TypeScript UI with MetaMask integration
 
@@ -105,13 +106,14 @@ OPEN → CALCULATING → CLOSED → OPEN (after restartTimer)
 ### 1. Clone the repo
 
 ```sh
-git clone 
-cd 
+git clone https://github.com/Priyanshuomer/Smart-Contracts.git
+cd Smart-Contracts/OmniLotto
 ```
 
 ### 2. Install frontend dependencies
 
 ```sh
+cd frontend
 bun install
 ```
 
@@ -124,7 +126,7 @@ bun run dev
 ### 4. Install contract dependencies
 
 ```sh
-cd contracts
+cd ../contracts
 forge install
 ```
 
@@ -153,9 +155,9 @@ anvil
 ### Deploy locally
 
 ```sh
-forge script script/DeployLottery.s.sol \
+forge script script/DeployLottery.s.sol:deployLottery \
   --rpc-url http://127.0.0.1:8545 \
-  --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 \
+  --private-key <YOUR_PRIVATE_KEY> \
   --broadcast
 ```
 
@@ -211,7 +213,7 @@ cast send <VRF_MOCK_ADDRESS> \
 ```sh
 source .env
 
-forge script script/DeployLottery.s.sol \
+forge script script/DeployLottery.s.sol:deployLottery \
   --rpc-url $SEPOLIA_RPC_URL \
   --private-key $PRIVATE_KEY \
   --broadcast \
@@ -233,7 +235,7 @@ forge script script/DeployLottery.s.sol \
    → Fund with LINK
 
 ✅ Set fee wallet to your EOA address
-✅ Update frontend contract addresses
+✅ Update frontend contract addresses in src/config/contract.ts
 ```
 
 ---
@@ -277,7 +279,7 @@ forge script script/DeployLottery.s.sol \
 ## 📁 Project Structure
 
 ```
-omnilotto/
+OmniLotto/
 ├── contracts/
 │   ├── src/
 │   │   ├── Lottery.sol
@@ -286,17 +288,27 @@ omnilotto/
 │   │   ├── DeployLottery.s.sol
 │   │   └── HelperConfig.s.sol
 │   ├── test/
+│   │   └── unitTesting.t.sol
 │   └── foundry.toml
 └── frontend/
     ├── src/
     │   ├── components/lottery/
-    │   ├── contexts/Web3Context.tsx
-    │   ├── constants/
-    │   │   ├── lotteryAbi.ts
-    │   │   └── omTokenAbi.ts
-    │   └── pages/Index.tsx
+    │   │   ├── AdminPanel.tsx
+    │   │   ├── BuyTokens.tsx
+    │   │   ├── CountdownTimer.tsx
+    │   │   ├── EnterLottery.tsx
+    │   │   ├── Header.tsx
+    │   │   ├── LotteryStats.tsx
+    │   │   ├── PlayersList.tsx
+    │   │   └── WinnersList.tsx
+    │   ├── config/
+    │   │   └── contract.ts
+    │   ├── contexts/
+    │   │   └── Web3Context.tsx
+    │   └── pages/
+    │       └── Index.tsx
     ├── package.json
-    └── bun.lockb
+    └── bun.lock
 ```
 
 ---

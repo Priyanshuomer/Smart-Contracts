@@ -159,7 +159,7 @@ const Index = () => {
                 <span className="text-5xl">🎰</span>
               </div>
               <h1 className="mb-3 text-4xl font-bold sm:text-5xl">
-                <span className="gradient-text">OmLottery</span>
+                <span className="gradient-text">OmniLotto</span>
               </h1>
               <p className="mb-8 max-w-md text-muted-foreground">
                 A decentralized lottery on Sepolia. Buy tokens, enter draws, and win ETH prizes.

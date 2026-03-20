@@ -215,7 +215,6 @@ export function LotteryStats() {
       icon:     <Wallet className="h-5 w-5" />,
       label:    "Fee Wallet",
       value:    `${lotteryData.feeWallet.slice(0, 6)}...${lotteryData.feeWallet.slice(-4)}`,
-      sub:      "receives 5%",
       accent:   "secondary",
       copyable: lotteryData.feeWallet,
     },
