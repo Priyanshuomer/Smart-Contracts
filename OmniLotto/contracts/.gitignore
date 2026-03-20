@@ -21,4 +21,4 @@ docs/
 commands.txt
 
 # Dotenv file
-.env
+.env*Formatted.json
