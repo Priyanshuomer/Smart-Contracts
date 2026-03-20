@@ -9,7 +9,7 @@ out/
 
 # Docs
 docs/
-
+lib/
 commands.txt
 
 # Dotenv file
